@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.stats as stats
 from scipy.linalg import eig
+from functools import reduce
 
 # Transition matrices for even process
 even_Ts = {
@@ -57,4 +58,4 @@ def gen_hmm(Ts,num=50,return_states=False):
 def gen_anbn(n,mu=1):
     rv = stats.poisson(mu=mu)
     lens = rv.rvs(size=n)+1
-    return ''.join([''.join(['0']*k+['1']*k) for k in lens])
+    return np.array(reduce(lambda x,y:x+y,[[0]*k+[1]*k for k in lens],[]))
